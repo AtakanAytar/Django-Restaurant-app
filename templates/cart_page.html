@@ -1,0 +1,87 @@
+
+
+
+
+
+<main>
+    <div class= "container">
+        <div class="table-responsive text-nowrap">
+    <h3>
+        <strong>Your Cart</strong>
+    </h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Item Price</th>
+        </tr>
+        </thead>
+        
+        
+        <tbody>
+        {% for order_item in object.items.all %}
+        <form action="sepet" method="post" >
+            {% csrf_token %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ order_item.item.food_item_name }}</td>
+            <td>
+          
+            {{ order_item.item.price}}
+            
+            </td>
+            <td>
+                <a href="#"><i class="fas fa-minus mr-2"></i></a>
+                {{ order_item.quantity }}
+                <a href="#"><i class="fas fa-plus ml-2"></i></a>
+            </td>
+            <td>
+            
+            {{ order_item.get_total_item_price}}
+          
+             <a href="#">
+                <i class="fas fa-trash float-right text-danger"></i>
+             </a>
+
+            </td>
+            <td>
+                <input type="hidden" name="delete_item" value="{{ order_item.item.food_item_name }}">
+                <input type="submit" name="button" value="Sil" class="btn btn-danger">
+
+            </td>
+        </tr>
+
+       
+        
+
+         <tr>
+            
+        </tr>
+        </form>
+        {% endfor %}
+        <td colspan="5">
+            <a href="/" class="btn btn-primary float-right">Continue Shopping</a>
+        </td>
+       
+        <p>Total Price : {{ object.get_total_price}} </p>
+        <form action="sepet" method="post" >
+            {% csrf_token %}
+  
+            <input type="hidden" name="make_the_order" value="{{ order_item.item.food_item_name }}">
+            <input type="submit" name="button" value="Siparis Ver" class="btn btn-danger">
+       
+        
+
+       
+        </form>
+        
+        </tbody>
+    </table>
+
+        </div>
+    </div>
+</main>
+

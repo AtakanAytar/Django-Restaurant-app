@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+
+
+    <form action="post_review" method="post" >
+        {% csrf_token %}
+       
+        <input type="text" id="message" name="message" value="message"><br><br>
+        
+        <select name="stars" id="stars">
+            
+            <option value="1">1 Yıldız</option>
+            <option value="2">2 Yıldız</option>
+            <option value="3">3 Yıldız</option>
+            <option value="4">4 Yıldız</option>
+            <option value="5">5 Yıldız</option>
+          </select>
+          
+        <input type="submit" name="add_user" value="Submit">
+      </form>
+
+  
+
+
+
+</body>
+</html>

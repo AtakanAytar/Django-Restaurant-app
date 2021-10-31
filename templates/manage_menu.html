@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+
+
+    <td><a href="upload_item">Add to menu</a></td>
+
+
+
+<table>
+    <tr>
+        <th>title</th>
+        <th>itemname</th>
+        <th>details</th>
+        <th>price</th>
+      
+    </tr>
+    {% for item in query_results %}
+    <form action="manage_menu" method="post" >
+        {% csrf_token %}
+        <tr> 
+            <td > {{ item.title }} </td>
+            <td>{{ item.food_item_name }}</td>
+            <td>{{ item.details }}</td>
+            <td>{{ item.price }}</td>
+            <td><a href="/delete_item/{{item.food_item_name}}">Delete</a></td>
+        </tr>
+    </form>
+    {% endfor %}
+</table>
+
+</body>
+</html>

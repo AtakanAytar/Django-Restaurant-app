@@ -1,0 +1,13 @@
+<head>
+  <title>HTML in 10 Simple Steps or Less</title>
+  <meta http-equiv="refresh" content="5"> <!-- See the difference? -->
+</head>
+
+{% for item in query_results %}
+<form action="{{ request.get_full_path }}" method="post" >   
+  {% csrf_token %}
+  <li>{{item.value}}</li>
+  <input type="hidden" name="delete_item" value="{{item.value}}">
+  <li><input type="submit" name="done_message" value="Ilgilenildi"></li>
+</form>
+{% endfor %}

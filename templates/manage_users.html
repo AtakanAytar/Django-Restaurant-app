@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+
+<body>
+
+
+    <form action="manage_users" method="post" >
+        {% csrf_token %}
+       
+        <input type="text" id="username" name="username" value="username"><br><br>
+        <input type="text"  name="password" value="password"><br><br>
+        <input type="text"  name="password2" value="password2"><br><br>
+        <select name="status" id="status">
+            <option value="0">0 - Garson</option>
+            <option value="1">1 - Restoran Yöneticisi</option>
+            <option value="2">2 - Süper Kullanıcı</option>
+            
+          </select>
+        <input type="text"  name="branch_id" value="branch_id"><br><br>
+        <input type="submit" name="add_user" value="Submit">
+      </form>
+
+    {% for item in query_results %}
+    <form action="manage_users" method="post" >
+        {% csrf_token %}
+        <tr> 
+            <td > {{ item.username }} </td>
+            <input type="hidden" name="username" value="{{ item.username }}">
+            <input type="submit" name="delete_user" value="Sil">
+        </tr>
+    </form>
+    {% endfor %}
+
+
+
+</body>
+</html>
