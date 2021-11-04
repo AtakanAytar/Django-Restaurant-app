@@ -7,7 +7,7 @@
 <body>
 
 
-    <td><a href="upload_item">Add to menu</a></td>
+    <td><a href="/restaurant/upload_item">Add to menu</a></td>
 
 
 
@@ -27,7 +27,7 @@
             <td>{{ item.food_item_name }}</td>
             <td>{{ item.details }}</td>
             <td>{{ item.price }}</td>
-            <td><a href="/delete_item/{{item.food_item_name}}">Delete</a></td>
+            <td><a href="/restaurant/delete_item/{{item.food_item_name}}">Delete</a></td>
         </tr>
     </form>
     {% endfor %}

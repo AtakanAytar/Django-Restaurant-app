@@ -10,8 +10,8 @@ from django.shortcuts import reverse
 
 class qr_link_resolve(models.Model):
     qr_code_id = models.CharField(max_length=50 ) 
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1)
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500)
     table_id = models.IntegerField(default=-1)
 
    
@@ -21,8 +21,8 @@ class menu_item(models.Model):
     food_item_name = models.CharField(max_length=200)
     details = models.CharField(max_length=200)
     price = models.CharField(max_length=200)
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1)
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500)
     menu_pic = models.ImageField(null=True)
 
     class Meta:
@@ -73,8 +73,8 @@ class Order(models.Model) :
     ordered_date = models.DateTimeField()
     ordered = models.BooleanField(default=False)
     paid = models.BooleanField(default=False)
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1)
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500)
     
     table_id = models.IntegerField(default=-1)
     def _str_(self):
@@ -88,15 +88,13 @@ class Order(models.Model) :
 class user_info(models.Model):
     username = models.CharField(max_length=200)
     status_id = models.IntegerField(default=-1)    #garson 0 - müdür 1 - yönetici 2
-    restaurant_name = models.CharField(max_length=200 , default="-1")
-    branch_name = models.CharField(max_length=200,default="-1")
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1) # -1 means all acssess
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500) # -1 means all acssess
 
 class Room(models.Model):
     name = models.CharField(max_length=1000)
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1) # -1 means all acssess
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500)
     room_clearance = models.IntegerField(default=0)
     
 class Message(models.Model):
@@ -105,13 +103,13 @@ class Message(models.Model):
     sender = models.CharField(max_length=1000000)
     done = models.BooleanField(default=False)
     room = models.CharField(max_length=1000000)
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1) # -1 means all acssess
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500)
     table_id = models.IntegerField(default=-1)
     
 class branch_info(models.Model):
-    restaurant_id = models.IntegerField(default=-1)
-    branch_id = models.IntegerField(default=-1)
+    restaurant_id = models.CharField(max_length=500)
+    branch_id = models.CharField(max_length=500)
     latitude = models.FloatField(max_length=100)
     longtitute = models.FloatField(max_length=100)
     

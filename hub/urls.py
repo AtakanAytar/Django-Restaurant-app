@@ -17,9 +17,9 @@ urlpatterns = [
    
     
 
-    path("upload_item",views.add_item_to_menu),
-    path("manage_menu",views.manage_menu,name="manage_menu"),
-    path("delete_item/<str:item_name>",views.delete_item_from_menu),
+    
+    
+   
   
   
 
