@@ -15,10 +15,11 @@ from geopy.distance import geodesic
 
 def send(request , message , sender , room , restaurant_id ,branch_id,table_id):
     
+    if not Message.objects.filter(value=message, sender=sender, room=room , restaurant_id=restaurant_id , branch_id=branch_id , table_id=table_id , done = False).exists():
 
-    new_message = Message.objects.create(value=message, sender=sender, room=room , restaurant_id=restaurant_id , branch_id=branch_id , table_id=table_id)
-    new_message.save()
-    return HttpResponse('Message sent successfully')
+        new_message = Message.objects.create(value=message, sender=sender, room=room , restaurant_id=restaurant_id , branch_id=branch_id , table_id=table_id)
+        new_message.save()
+        return HttpResponse('Message sent successfully')
 
 
 
@@ -28,7 +29,8 @@ def public_profile(request , restaurant_id , branch_id , table_no ):
         menu_titles = menu_of_requested.values_list("title",flat=True)
         menu_titles = list(dict.fromkeys(menu_titles))
         context = { 'query_results' : menu_of_requested ,"menu_titles":menu_titles } 
-        
+        request.session['public_profile'] =  request.get_full_path()
+
         if request.method == 'POST':
                 if "add_item" in request.POST:
                         
@@ -134,9 +136,12 @@ def resolve_qr_code(request , string_info):
 
 
 def cart_page(request):
-    
+      
         session_key  = request.session.session_key
-        order = Order.objects.get(session_id=session_key, ordered=False)
+        order = Order.objects.filter(session_id=session_key, ordered=False)
+       
+        order = order[0]
+        
         restaurant_id = order.restaurant_id
         branch_id = order.branch_id
         table_id = order.table_id
@@ -171,10 +176,14 @@ def cart_page(request):
                         order.ordered = True
                         order.save()
                         send(request,order_string,session_key,"siparişler",restaurant_id,branch_id,table_id)
-                                       
+                        return redirect(request.session['public_profile'])
+               
+
                                 
 
 
 
         return render(request,"cart_page.html",context)
 
+def customer_review(request):
+        return render(request,"post_review.html")

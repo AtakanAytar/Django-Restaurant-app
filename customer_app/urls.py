@@ -9,5 +9,6 @@ urlpatterns = [
     
     path("resolve_url/<str:string_info>",views.resolve_qr_code),
     path("sepet",views.cart_page),
+    path("review",views.customer_review),
   
 ] 

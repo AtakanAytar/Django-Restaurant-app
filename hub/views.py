@@ -14,10 +14,11 @@ from django.utils import timezone
 ## branch_id restaurant_id -1 e dikkat et
 def send(request , message , sender , room , restaurant_id ,branch_id,table_id):
     
+    if not Message.objects.filter(value=message, sender=sender, room=room , restaurant_id=restaurant_id , branch_id=branch_id , table_id=table_id , done = False).exists():
 
-    new_message = Message.objects.create(value=message, sender=sender, room=room , restaurant_id=restaurant_id , branch_id=branch_id , table_id=table_id)
-    new_message.save()
-    return HttpResponse('Message sent successfully')
+        new_message = Message.objects.create(value=message, sender=sender, room=room , restaurant_id=restaurant_id , branch_id=branch_id , table_id=table_id)
+        new_message.save()
+        return HttpResponse('Message sent successfully')
 
 def landing_page(request):
         
@@ -25,13 +26,7 @@ def landing_page(request):
         return render(request,'landing_page.html')
 
 
-#def setsession(request):  
-#    request.session['name'] = 'prady'  
-#    return HttpResponse("session is set")  
-#def getsession(request):  
-#    fname = request.session['name']  
-    
-#    return HttpResponse(fname);  
+
 
 
 
