@@ -144,7 +144,7 @@ def  get_messages_page(request,room_name):
                         messages.done = True 
                         messages.save()
                         if room_name =="siparişler":
-                                send(request=request,message = message[1] + "siparişi hazır" , sender="Mutfak" ,room="masalar" , restaurant_id=restaurant_id , branch_id=branch_id , table_id="-99" )
+                                send(request=request,message = str(request.session['table_id']) + " numaralaı masanın siparişi hazır" , sender="Mutfak" ,room="masalar" , restaurant_id=restaurant_id , branch_id=branch_id , table_id=request.session['table_id'] )
 
 
                         messages = Message.objects.filter(room=room_name,  restaurant_id=restaurant_id,branch_id=branch_id , done = False )

@@ -9,16 +9,7 @@
     <h3>
         <strong>Your Cart</strong>
     </h3>
-    <form action="sepet" method="post" >
-        {% csrf_token %}
-
-        <input type="hidden" name="menuye_dön" value="">
-        <input type="submit" name="button" value="Menüye dön" class="btn btn-danger">
-   
-    
-
-   
-    </form>
+  
     <table class="table">
         <thead>
         <tr>
@@ -32,6 +23,17 @@
         
         
         <tbody>
+            <form action="sepet" method="post" >
+                {% csrf_token %}
+        
+                
+                <input type="hidden" name="menuye_don" value="">
+                <input type="submit" name="button" value="Menuye Dön" class="btn btn-danger">
+           
+            
+        
+           
+            </form>
         {% for order_item in object.items.all %}
         <form action="sepet" method="post" >
             {% csrf_token %}

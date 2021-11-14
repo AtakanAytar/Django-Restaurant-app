@@ -75,12 +75,12 @@ def delete_user_from_branch(request,username):
         if user_instance.username != username:
                 
                 
-                u = User.objects.get(username = username)
+    
                 perms = user_info.objects.get(username=username)
 
                 if perms.restaurant_id == restaurant_id and (status_id  > perms.status_id or status_id == 2):
                         
-                        u.delete()
+                   
                         perms.delete()
         return redirect("/manage_users")
 

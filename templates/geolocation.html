@@ -1,10 +1,35 @@
 <!DOCTYPE html>
+
 <html>
+ <head>
+  {% load static%}
+  <link href="{% static '/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+ </head> 
 <body>
+<style>
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
 
-<p>Click the button to get your coordinates.</p>
 
-<button onclick="getLocation()">Try It</button>
+</style>
+<div class="center">
+  <p>Lütfen konum izininizin açık olduğundan ve çıkan izin istegine izin verdikten sonra alttaki tuşa basın.Eğer bu adımı tamamlayamazsanız platformumuzdan sipariş vermezsiniz</p>
+
+
+  <button onclick="getLocation()" class="btn btn-primary">Devam Et</button>
+</div>
+
 
 <p id="demo"></p>
 

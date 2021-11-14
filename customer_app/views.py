@@ -1,3 +1,4 @@
+from django.db.models.lookups import StartsWith
 from django.shortcuts import render , redirect , get_object_or_404
 from django.http import HttpResponse, request
 from django.contrib.auth.models import User, auth
@@ -73,12 +74,12 @@ def public_profile(request , restaurant_id , branch_id , table_no ):
                         total_price = 0
 
                         message = str(table_no) + " hesap istiyor"
-                        order_qs = Order.objects.filter(session_id=session_key, ordered= False,paid=False)
+                        order_qs = Order.objects.filter(session_id=session_key, ordered= True,paid=False)
                         for a in order_qs:
                                 for b in a.items.all():
                                         curr_price = int(b.item.price) * int(b.quantity)
                                         item_row = str(b.quantity) +"  " + str(b.item) + "  " + str(b.item.price) + " " + str(curr_price)
-                                        message = message + "\n" + item_row
+                                        message = message + " " + item_row
                                         total_price = total_price + curr_price 
                         message = message + "total: " + str(total_price)
                         #Burada olcak hesap
@@ -99,7 +100,7 @@ def resolve_qr_code(request , string_info):
                
                 
                 branch_coord = (branch_result.latitude,branch_result.longtitute)
-                if geodesic(user_coord, branch_coord).km < 0.15:
+                if geodesic(user_coord, branch_coord).km < 0.15 or branch_result.latitude == -1 :
                         print(geodesic(user_coord, branch_coord).km)
                         return  public_profile(request,request.session['restaurant_id'],request.session['branch_id'],request.session['table_id']  )
         else:
@@ -139,15 +140,18 @@ def cart_page(request):
       
         session_key  = request.session.session_key
         order = Order.objects.filter(session_id=session_key, ordered=False)
-       
+        if not order.exists():
+                return redirect(request.session['public_profile'])
+
         order = order[0]
-        
+        print(order)
         restaurant_id = order.restaurant_id
         branch_id = order.branch_id
         table_id = order.table_id
         context = {"object":order}
         
         if request.method == "POST":
+                print("e")
                 if "delete_item" in request.POST:
                         food_item_name = request.POST["delete_item"]
                
@@ -167,17 +171,20 @@ def cart_page(request):
                                 )[0]
                         order_item.delete()
                 elif "make_the_order" in request.POST:
-                        order_string =  "-1 "
+                        order_string =  str(table_id) + " "
                         items = order.items.all()
                         for a in items:
                                 
-                                order_message =  a.item.food_item_name + " x" + str(a.quantity) + " "
+                                order_message =  a.item.food_item_name + " x " + str(a.quantity) + " "
                                 order_string = order_string + order_message
                         order.ordered = True
                         order.save()
                         send(request,order_string,session_key,"siparişler",restaurant_id,branch_id,table_id)
                         return redirect(request.session['public_profile'])
-               
+                elif "menuye_don" in request.POST:
+                        print("saw")
+                        return redirect(request.session['public_profile'])
+
 
                                 
 
@@ -186,4 +193,14 @@ def cart_page(request):
         return render(request,"cart_page.html",context)
 
 def customer_review(request):
+        if request.method == "POST":
+                
+                if "message" in request.POST:
+                        Message = request.POST["message"]
+                        Stars = request.POST["stars"]
+                        new_message = review.objects.create(value=Message, stars=Stars)
+                        new_message.save()
+                        
+
+
         return render(request,"post_review.html")

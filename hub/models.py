@@ -114,4 +114,9 @@ class branch_info(models.Model):
     longtitute = models.FloatField(max_length=100)
     
     
+class review(models.Model):
+    value = models.CharField(max_length=1000000)
+    stars = models.IntegerField()
+
+    
 
